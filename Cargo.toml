@@ -9,8 +9,9 @@ nickel = "0.11.0"
 reqwest = { version = "0.11", features = ["json", "blocking"] }
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
+serde_path_to_error = "0.1.9"
 futures = { version = "0.3", default-features = true }
 futures-executor = "0.3"
-postgres="0.19.4"
-chrono = "0.4.23"
+#postgres="0.19.4"
+chrono = { version="0.4.23", features=["serde"]}
 #openssl = { version = "0.10.45", features = ["vendored"] } #To appease the linux image install
