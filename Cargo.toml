@@ -13,10 +13,11 @@ serde_path_to_error = "0.1.9"
 serde_repr="0.1"
 futures = { version = "0.3", default-features = true }
 futures-executor = "0.3"
+
 postgres={version="0.19.4", features=["with-chrono-0_4"]}
 postgres-types ={version="0.2.4", features=["derive"]}
 chrono = { version="0.4.23", features=["serde"]}
 config="0.13.3"
 strum = "0.24"
 strum_macros = "0.24"
-#openssl = { version = "0.10.45", features = ["vendored"] } #To appease the linux image install
+openssl = { version = "0.10.46", features = ["vendored"] } #To appease the linux image install

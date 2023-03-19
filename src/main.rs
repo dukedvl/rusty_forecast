@@ -246,7 +246,7 @@ pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>, api_key: String) {
     let client = reqwest::blocking::Client::new();
     let params = [
         ("location", "30.466,-97.771"),
-        ("fields", "temperature,temperatureApparent,weatherCode,precipitationType,precipitationProbability"),
+        ("fields", "temperature,temperatureApparent,weatherCode,precipitationType,precipitationProbability,humidity,dewPoint"),
         ("timesteps", "1h"),
         ("endTime", &get_hourly_timestamp()),
         ("units", "imperial"),
