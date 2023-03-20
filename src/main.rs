@@ -179,7 +179,7 @@ fn main() {
     server.get("/forecast/echo", middleware! {|request| echo(request)});
     server.get("/forecast/poke", middleware! {|request| poke(request, mhandle_cfg.lock().unwrap()["connectionString"].clone())});
 
-    server.listen("127.0.0.1:3031").unwrap();
+    server.listen("0.0.0.0:3031").unwrap();
 }
 
 pub fn poke(_request: &mut nickel::Request, conn_str: String) -> String {
@@ -230,6 +230,8 @@ pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>, api_key: String) {
         .send()
         .unwrap();
 
+    //Fix error handling, don't overwrite data
+
     let root = resp.json::<climacell::DailyRoot>().unwrap();
     let daily = DailyWeather::convert(root);
     *daily_model = daily;
@@ -258,7 +260,7 @@ pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>, api_key: String) {
         .query(&params)
         .send()
         .unwrap();
-
+    //Fix error handling, don't overwrite data
     let root = resp.json::<climacell::HourlyRoot>().unwrap();
     let hourly = HourlyWeather::convert(root);
     *hourly_model = hourly;
