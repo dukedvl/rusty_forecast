@@ -68,6 +68,8 @@ pub struct Values {
     pub temperature: f64,
     pub temperature_apparent: f64,
     pub weather_code: crate::climacell::weather_code::WeatherCode,
+    pub humidity: Option<f64>,
+    pub dew_point: Option<f64>,
 }
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -125,8 +127,8 @@ impl HourlyWeather {
                 weather_code: interval.values.weather_code,
                 precipitation_chance: interval.values.precipitation_probability as f64,
                 precipitation_type: interval.values.precipitation_type,
-                humidity: None,
-                dew_point: None,
+                humidity: interval.values.humidity,
+                dew_point: interval.values.dew_point,
             });
         }
 

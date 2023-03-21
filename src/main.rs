@@ -359,7 +359,7 @@ pub fn get_daily_db(conn_str: String) -> Vec<DailyWeather> {
 
     let dailies: Vec<postgres::Row> = client
         .query(
-            "SELECT * from daily_weather ORDER BY weather_time DESC LIMIT 8",
+            "SELECT * FROM(SELECT created_at, weather_time, high, low, weather_code, moon_phase, sunrise_time, sunset_time FROM daily_weather ORDER BY created_at DESC LIMIT 8) as Recent ORDER BY weather_time ASC;",
             &[],
         )
         .unwrap();
@@ -399,7 +399,7 @@ pub fn get_hourly_db(conn_str: String) -> Vec<HourlyWeather> {
 
     let hourlies: Vec<postgres::Row> = client
         .query(
-            "SELECT * from hourly_weather ORDER BY weather_time DESC LIMIT 24;",
+            "SELECT * FROM (SELECT created_at, weather_time, temp, feels_like, weather_code, precipitation_type, precipitation_chance, humidity, dew_point from hourly_weather ORDER BY created_at DESC LIMIT 25) as Recent ORDER BY weather_time ASC;",
             &[],
         )
         .unwrap();
