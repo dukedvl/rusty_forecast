@@ -1,7 +1,8 @@
 use chrono::{DateTime, Local, TimeZone, Utc};
 use climacell::{DailyWeather, HourlyWeather};
 use config::Config;
-use nickel::{HttpRouter, Nickel, QueryString};
+use nickel::hyper::header::AccessControlAllowOrigin;
+use nickel::{HttpRouter, MediaType, Nickel, QueryString};
 use postgres::{Client, NoTls};
 use std::collections::HashMap;
 use std::sync::{Arc, Mutex};
@@ -137,13 +138,13 @@ fn main() {
     });
 
     let mut server = Nickel::new();
-
     let mhandle_inst = Arc::clone(&inst);
     let mhandle_hour = Arc::clone(&hourlies);
     let mhandle_daily = Arc::clone(&dailies);
 
+    let mut router = Nickel::router();
     //Weather routes
-    server.get(
+    router.get(
         "/forecast/hourly",
         middleware! {|request|
             let mut hourly = mhandle_hour.lock().unwrap();
@@ -152,7 +153,7 @@ fn main() {
             resp
         },
     );
-    server.get(
+    router.get(
         "/forecast/instant",
         middleware! {|request|
             let mut isnt = mhandle_inst.lock().unwrap();
@@ -161,7 +162,7 @@ fn main() {
             resp
         },
     );
-    server.get(
+    router.get(
         "/forecast/daily",
         middleware! {|request|
             let mut daily = mhandle_daily.lock().unwrap();
@@ -171,15 +172,28 @@ fn main() {
         },
     );
 
-    server.get(
+    router.get(
         "/forecast/historical",
-        middleware! {|request|get_hist(request)},
+        middleware! {|request|
+        get_hist(request)},
     );
 
-    server.get("/forecast/echo", middleware! {|request| echo(request)});
-    server.get("/forecast/poke", middleware! {|request| poke(request, mhandle_cfg.lock().unwrap()["connectionString"].clone())});
+    router.get("/forecast/echo", middleware! {|request| echo(request)});
+    router.get("/forecast/poke", middleware! {|request| poke(request, mhandle_cfg.lock().unwrap()["connectionString"].clone())});
 
+    server.utilize(set_default_headers);
+    server.utilize(router);
     server.listen("0.0.0.0:3031").unwrap();
+}
+
+fn set_default_headers<'mw>(
+    _req: &mut nickel::Request,
+    mut res: nickel::Response<'mw>,
+) -> nickel::MiddlewareResult<'mw> {
+    res.set(AccessControlAllowOrigin::Any);
+    res.set(MediaType::Json);
+
+    res.next_middleware()
 }
 
 pub fn poke(_request: &mut nickel::Request, conn_str: String) -> String {
@@ -214,7 +228,7 @@ pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>, api_key: String) {
     println!("hitting daily web API");
     let client = reqwest::blocking::Client::new();
     let params = [
-        ("location", "30.4664,-97.7713"),
+        ("location", "35.428,-79.107"),
         ("units", "imperial"),
         ("timesteps", "1d"),
         ("endTime", &get_weekly_timestamp()),
@@ -231,7 +245,6 @@ pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>, api_key: String) {
         .unwrap();
 
     //Fix error handling, don't overwrite data
-
     let root = resp.json::<climacell::DailyRoot>().unwrap();
     let daily = DailyWeather::convert(root);
     *daily_model = daily;
@@ -247,7 +260,7 @@ pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>, api_key: String) {
     println!("hitting hourly web API");
     let client = reqwest::blocking::Client::new();
     let params = [
-        ("location", "30.466,-97.771"),
+        ("location", "35.428,-79.107"),
         ("fields", "temperature,temperatureApparent,weatherCode,precipitationType,precipitationProbability,humidity,dewPoint"),
         ("timesteps", "1h"),
         ("endTime", &get_hourly_timestamp()),
@@ -284,7 +297,7 @@ pub fn get_cached_inst(_request: &mut nickel::Request, inst: &mut wunder::Root) 
 pub fn get_inst_web(inst_model: &mut wunder::Root, api_key: String) {
     let client = reqwest::blocking::Client::new();
     let mut params = HashMap::new();
-    params.insert("stationId", "KTXAUSTI2731");
+    params.insert("stationId", "KNCSANFO139");
     params.insert("format", "json");
     params.insert("units", "e");
     params.insert("apiKey", &api_key);
@@ -303,7 +316,7 @@ pub fn get_hist(_request: &mut nickel::Request) -> String {
 }
 
 pub fn get_weekly_timestamp() -> String {
-    let time = chrono::Local::now() + chrono::Duration::days(7);
+    let time = chrono::Local::now() + chrono::Duration::days(5);
 
     time.to_rfc3339()
 }
