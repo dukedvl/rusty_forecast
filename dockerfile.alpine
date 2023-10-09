@@ -32,5 +32,5 @@ COPY --from=builder /etc/group /etc/group
 WORKDIR /forecast
 # Copy our build
 COPY --from=builder /forecast/target/x86_64-unknown-linux-musl/release/rusty_forecast ./
-COPY Settings.toml Settings.toml
 CMD ["/forecast/rusty_forecast"]
+EXPOSE 3031

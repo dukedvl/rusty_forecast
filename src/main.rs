@@ -1,6 +1,5 @@
 use chrono::{DateTime, Local, TimeZone, Utc};
 use climacell::{DailyWeather, HourlyWeather};
-use config::Config;
 use nickel::hyper::header::AccessControlAllowOrigin;
 use nickel::{HttpRouter, MediaType, Nickel, QueryString};
 use postgres::{Client, NoTls};
@@ -17,16 +16,6 @@ mod climacell;
 mod wunder;
 
 fn main() {
-    let configdata = Config::builder()
-        .add_source(config::File::with_name("Settings"))
-        .build()
-        .unwrap()
-        .try_deserialize::<HashMap<String, String>>()
-        .unwrap();
-    let handle_cfg: Arc<Mutex<HashMap<String, String>>> = Arc::new(Mutex::new(configdata));
-    let thandle_cfg: Arc<Mutex<HashMap<String, String>>> = Arc::clone(&handle_cfg);
-    let mhandle_cfg: Arc<Mutex<HashMap<String, String>>> = Arc::clone(&handle_cfg);
-
     //Wakeup
     let hourlies: Arc<Mutex<Vec<climacell::HourlyWeather>>> = Arc::new(Mutex::new(vec![]));
     let dailies: Arc<Mutex<Vec<climacell::DailyWeather>>> = Arc::new(Mutex::new(vec![]));
@@ -44,9 +33,10 @@ fn main() {
         let mut _daily_timestamp = DateTime::<Utc>::MIN_UTC;
         let mut _last_instantpull = DateTime::<Utc>::MIN_UTC;
 
+        let conn_str = get_conn_str();
+
         //Poke DB timestamps
-        (_hourly_timestamp, _daily_timestamp) =
-            poke_db_timestamps(thandle_cfg.lock().unwrap()["connectionString"].clone());
+        (_hourly_timestamp, _daily_timestamp) = poke_db_timestamps(&conn_str);
 
         loop {
             if (Utc::now() - _last_instantpull) > chrono::Duration::minutes(30) {
@@ -55,7 +45,7 @@ fn main() {
                 let mut instant_t = thandle_inst.lock().unwrap();
                 get_inst_web(
                     &mut instant_t,
-                    thandle_cfg.lock().unwrap()["wunderApi"].clone(),
+                    std::env::var("RUSTYFORECAST_wunderApi").unwrap().clone(),
                 );
                 _last_instantpull = Utc::now();
                 drop(instant_t);
@@ -72,7 +62,7 @@ fn main() {
                 //Hit Web API
                 get_hourly_web(
                     &mut hourly_t,
-                    thandle_cfg.lock().unwrap()["climacellApi"].clone(),
+                    std::env::var("RUSTYFORECAST_climacellApi").unwrap().clone(),
                 );
 
                 //Refresh Timestamp
@@ -80,10 +70,7 @@ fn main() {
 
                 //Persist Hourly Data in DB
                 println!("Persisting new hourly data to DB");
-                dump_hourly_db(
-                    &mut hourly_t,
-                    thandle_cfg.lock().unwrap()["connectionString"].clone(),
-                );
+                dump_hourly_db(&mut hourly_t, &conn_str);
 
                 //Unlock reference to hourly data
                 drop(hourly_t);
@@ -93,8 +80,10 @@ fn main() {
                 if hourly_t.len() == 0 {
                     println!("Hourly cache empty, pulling from DB");
 
-                    *hourly_t =
-                        get_hourly_db(thandle_cfg.lock().unwrap()["connectionString"].clone());
+                    *hourly_t = get_hourly_db(&conn_str);
+
+                    //Fix the hourly timestamp to the most recent record..
+                    //_hourly_timestamp = hourly_t[0].created_at;
                 } else {
                     println!("Hourly data still fresh");
                 }
@@ -107,17 +96,14 @@ fn main() {
 
                 get_daily_web(
                     &mut daily_t,
-                    thandle_cfg.lock().unwrap()["climacellApi"].clone(),
+                    std::env::var("RUSTYFORECAST_climacellApi").unwrap().clone(),
                 );
 
                 _daily_timestamp = Utc::now();
 
                 //Persist Daily Data in DB
                 println!("Persisting daily data to DB");
-                dump_daily_db(
-                    &mut daily_t,
-                    thandle_cfg.lock().unwrap()["connectionString"].clone(),
-                );
+                dump_daily_db(&mut daily_t, &conn_str);
 
                 drop(daily_t);
             } else {
@@ -126,8 +112,10 @@ fn main() {
                 if daily_t.len() == 0 {
                     println!("Daily cache empty, pulling from DB");
 
-                    *daily_t =
-                        get_daily_db(thandle_cfg.lock().unwrap()["connectionString"].clone());
+                    *daily_t = get_daily_db(&conn_str);
+
+                    //Daily timestamp to the most recent daily pull
+                    //_daily_timestamp = daily_t[0].created_at;
                 } else {
                     println!("Daily data still fresh");
                 }
@@ -179,11 +167,25 @@ fn main() {
     );
 
     router.get("/forecast/echo", middleware! {|request| echo(request)});
-    router.get("/forecast/poke", middleware! {|request| poke(request, mhandle_cfg.lock().unwrap()["connectionString"].clone())});
+    router.get(
+        "/forecast/poke",
+        middleware! {|request| poke(request, &get_conn_str())},
+    );
+
+    router.get(
+        "/forecast/healthcheck",
+        middleware! {println!("Healthcheck(Ok)"); "ok"},
+    );
 
     server.utilize(set_default_headers);
     server.utilize(router);
-    server.listen("0.0.0.0:3031").unwrap();
+    server
+        .listen(format!(
+            "{hostname}:{port}",
+            hostname = std::env::var("RUSTYFORECAST_HostURL").unwrap(),
+            port = std::env::var("RUSTYFORECAST_HostPort").unwrap()
+        ))
+        .unwrap();
 }
 
 fn set_default_headers<'mw>(
@@ -196,8 +198,8 @@ fn set_default_headers<'mw>(
     res.next_middleware()
 }
 
-pub fn poke(_request: &mut nickel::Request, conn_str: String) -> String {
-    let dailies = get_daily_db(conn_str.clone());
+pub fn poke(_request: &mut nickel::Request, conn_str: &str) -> String {
+    let dailies = get_daily_db(conn_str);
 
     for daily in dailies.iter() {
         println!("{daily:?}");
@@ -227,8 +229,10 @@ pub fn echo(request: &mut nickel::Request) -> String {
 pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>, api_key: String) {
     println!("hitting daily web API");
     let client = reqwest::blocking::Client::new();
+    let lat_long = get_lat_long();
+
     let params = [
-        ("location", "35.428,-79.107"),
+        ("location", lat_long.as_str()),
         ("units", "imperial"),
         ("timesteps", "1d"),
         ("endTime", &get_weekly_timestamp()),
@@ -259,8 +263,11 @@ pub fn get_cached_daily(_request: &mut nickel::Request, daily: &mut Vec<DailyWea
 pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>, api_key: String) {
     println!("hitting hourly web API");
     let client = reqwest::blocking::Client::new();
+    let lat_long = get_lat_long();
+
     let params = [
-        ("location", "35.428,-79.107"),
+        (
+            "location", lat_long.as_str()),
         ("fields", "temperature,temperatureApparent,weatherCode,precipitationType,precipitationProbability,humidity,dewPoint"),
         ("timesteps", "1h"),
         ("endTime", &get_hourly_timestamp()),
@@ -296,8 +303,9 @@ pub fn get_cached_inst(_request: &mut nickel::Request, inst: &mut wunder::Root) 
 
 pub fn get_inst_web(inst_model: &mut wunder::Root, api_key: String) {
     let client = reqwest::blocking::Client::new();
+    let station_id = get_station_id();
     let mut params = HashMap::new();
-    params.insert("stationId", "KNCSANFO139");
+    params.insert("stationId", station_id.as_str());
     params.insert("format", "json");
     params.insert("units", "e");
     params.insert("apiKey", &api_key);
@@ -327,8 +335,8 @@ pub fn get_hourly_timestamp() -> String {
     time.to_rfc3339()
 }
 
-pub fn dump_daily_db(daily_data: &mut [DailyWeather], conn_str: String) {
-    let mut client = Client::connect(&conn_str, NoTls).unwrap();
+pub fn dump_daily_db(daily_data: &mut [DailyWeather], conn_str: &str) {
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
 
     for interval in daily_data.iter() {
         client.execute("INSERT INTO daily_weather(weather_time,high,low,weather_code,moon_phase,sunrise_time,sunset_time) VALUES ($1,$2,$3,$4,$5,$6,$7)",
@@ -336,8 +344,8 @@ pub fn dump_daily_db(daily_data: &mut [DailyWeather], conn_str: String) {
     }
 }
 
-pub fn dump_hourly_db(hourly_data: &mut [HourlyWeather], conn_str: String) {
-    let mut client = Client::connect(&conn_str, NoTls).unwrap();
+pub fn dump_hourly_db(hourly_data: &mut [HourlyWeather], conn_str: &str) {
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
 
     for interval in hourly_data.iter() {
         client.execute("INSERT INTO hourly_weather(weather_time,temp,feels_like,weather_code,precipitation_type,precipitation_chance,humidity,dew_point) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)",
@@ -345,8 +353,8 @@ pub fn dump_hourly_db(hourly_data: &mut [HourlyWeather], conn_str: String) {
     }
 }
 
-pub fn poke_db_timestamps(conn_str: String) -> (DateTime<Utc>, DateTime<Utc>) {
-    let mut client = Client::connect(&conn_str, NoTls).unwrap();
+pub fn poke_db_timestamps(conn_str: &str) -> (DateTime<Utc>, DateTime<Utc>) {
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
 
     let new_hourly = match client.query(
         "SELECT created_at FROM hourly_weather ORDER BY created_at DESC",
@@ -367,8 +375,8 @@ pub fn poke_db_timestamps(conn_str: String) -> (DateTime<Utc>, DateTime<Utc>) {
     (new_hourly, new_daily)
 }
 
-pub fn get_daily_db(conn_str: String) -> Vec<DailyWeather> {
-    let mut client = Client::connect(&conn_str, NoTls).unwrap();
+pub fn get_daily_db(conn_str: &str) -> Vec<DailyWeather> {
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
 
     let dailies: Vec<postgres::Row> = client
         .query(
@@ -405,10 +413,10 @@ pub fn get_daily_db(conn_str: String) -> Vec<DailyWeather> {
     return_vec
 }
 
-pub fn get_hourly_db(conn_str: String) -> Vec<HourlyWeather> {
+pub fn get_hourly_db(conn_str: &str) -> Vec<HourlyWeather> {
     let mut return_vec = vec![];
 
-    let mut client = Client::connect(&conn_str, NoTls).unwrap();
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
 
     let hourlies: Vec<postgres::Row> = client
         .query(
@@ -437,4 +445,24 @@ pub fn get_hourly_db(conn_str: String) -> Vec<HourlyWeather> {
     }
 
     return_vec
+}
+
+fn get_conn_str() -> String {
+    let conn_str=format!("host='{db_hostname}' dbname='{db_name}' port={db_port} user='{db_username}' password='{db_password}'",
+
+    db_hostname= std::env::var("RUSTYFORECAST_DBHOSTNAME").expect("DB Hostname not set"),
+    db_name=std::env::var("RUSTYFORECAST_DBNAME").expect("DB Name not set"),
+    db_port= std::env::var("RUSTYFORECAST_DBPORT").expect("DB Port not set"),
+    db_username=std::env::var("RUSTYFORECAST_DBUSER").expect("DB Username not set"),
+    db_password=std::env::var("RUSTYFORECAST_DBPASS").expect("DB Pass not set"));
+
+    conn_str
+}
+
+fn get_lat_long() -> String {
+    std::env::var("RUSTYFORECAST_LATLONG").expect("Lat Long not set")
+}
+
+fn get_station_id() -> String {
+    std::env::var("RUSTYFORECAST_StationID").expect("Station ID not set")
 }
