@@ -48,6 +48,8 @@ fn main() {
                     std::env::var("RUSTYFORECAST_wunderApi").unwrap().clone(),
                 );
                 _last_instantpull = Utc::now();
+
+                dump_inst_db(wunder::InstModel::convert(&mut instant_t), &conn_str);
                 drop(instant_t);
             } else {
                 println!("Instant data still fresh");
@@ -351,6 +353,27 @@ pub fn dump_hourly_db(hourly_data: &mut [HourlyWeather], conn_str: &str) {
         client.execute("INSERT INTO hourly_weather(weather_time,temp,feels_like,weather_code,precipitation_type,precipitation_chance,humidity,dew_point) VALUES ($1,$2,$3,$4,$5,$6,$7,$8)",
     &[&interval.weather_time.naive_local(), &interval.temp, &interval.feels_like, &interval.weather_code, &interval.precipitation_type, &interval.precipitation_chance, &interval.humidity, &interval.dew_point]).unwrap();
     }
+}
+
+pub fn dump_inst_db(inst: wunder::InstModel, conn_str: &str) {
+    let mut client = Client::connect(conn_str, NoTls).unwrap();
+
+    client.execute("INSERT INTO historical_weather(obs_time_utc,obs_time_local,temp,heat_index,wind_chill,dew_point,humidity,precip_rate,precip_total,wind_speed,wind_dir,wind_gust,pressure,solar_radiation,uv_index) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15)",
+    &[&inst.obs_time_utc,
+    &inst.obs_time_local,
+     &inst.temp,
+      &inst.heat_index,
+      &inst.wind_chill,
+       &inst.dewpt,
+       &inst.humidity,
+       &inst.precip_rate,
+       &inst.precip_total,
+       &inst.wind_speed,
+       &inst.winddir,
+       &inst.wind_gust,
+       &inst.pressure,
+       &inst.solar_radiation,
+       &inst.uv]).unwrap();
 }
 
 pub fn poke_db_timestamps(conn_str: &str) -> (DateTime<Utc>, DateTime<Utc>) {
