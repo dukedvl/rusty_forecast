@@ -1,11 +1,9 @@
-use chrono::{DateTime, Local, NaiveDateTime, TimeZone, Utc};
+use chrono::{DateTime, Local, TimeZone, Utc};
 use climacell::{DailyWeather, HourlyWeather};
 use nickel::hyper::header::AccessControlAllowOrigin;
-use nickel::hyper::Error;
 use nickel::status::StatusCode;
-use nickel::{HttpRouter, MediaType, Nickel, Query, QueryString};
+use nickel::{HttpRouter, MediaType, Nickel, QueryString};
 use postgres::{Client, NoTls};
-use postgres_types::FromSql;
 use std::collections::HashMap;
 use std::str::FromStr;
 use std::sync::{Arc, Mutex};
@@ -538,17 +536,18 @@ fn get_historical_db(day: &str) -> Vec<InstModel> {
 
     let mut client = Client::connect(&get_conn_str(), NoTls).unwrap();
 
-    let queryStr= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) = '{day}'");
+    let query_str= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) = '{day}'");
+    
     let rows = client
         .query(
-            &queryStr,
+            &query_str,
             &[],
         )
         .unwrap();
 
     for row in rows.iter() {
 
-        let inst: InstModel = InstModel {
+        returns.push( InstModel {
             obs_time_utc: row.get(2),
             obs_time_local:row.get(3),
             temp: row.get(4),
@@ -564,9 +563,8 @@ fn get_historical_db(day: &str) -> Vec<InstModel> {
             pressure: row.get(14),
             solar_radiation: row.get(15),
             uv: row.get(16),
-        };
-
-        returns.push(inst);
+        });
+       
     }
 
     returns
@@ -577,17 +575,18 @@ fn get_historical_range_db(day1: &str, day2: &str) -> Vec<InstModel> {
 
     let mut client = Client::connect(&get_conn_str(), NoTls).unwrap();
 
-    let queryStr= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) BETWEEN '{day1}' AND '{day2}'");
+    let query_str= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) BETWEEN '{day1}' AND '{day2}'");
+
     let rows = client
         .query(
-            &queryStr,
+            &query_str,
             &[],
         )
         .unwrap();
 
     for row in rows.iter() {
 
-        let inst: InstModel = InstModel {
+        returns.push(InstModel {
             obs_time_utc: row.get(2),
             obs_time_local:row.get(3),
             temp: row.get(4),
@@ -603,9 +602,7 @@ fn get_historical_range_db(day1: &str, day2: &str) -> Vec<InstModel> {
             pressure: row.get(14),
             solar_radiation: row.get(15),
             uv: row.get(16),
-        };
-
-        returns.push(inst);
+        });
     }
 
     returns
