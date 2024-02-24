@@ -6,10 +6,14 @@ use std::error::Error;
 use std::str::FromStr;
 use strum_macros::{Display, EnumString};
 
+
+#[allow(non_camel_case_types)]
+
 #[derive(
     Default, Debug, Clone, PartialEq, Serialize, Deserialize_repr, Copy, EnumString, Display,
 )]
 #[repr(u8)]
+#[allow(non_camel_case_types)]
 pub enum MoonPhase {
     #[default]
     New = 0,
