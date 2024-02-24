@@ -1,4 +1,5 @@
 use chrono::{DateTime, Utc};
+use climacell::models::{HourlyWeather, DailyWeather};
 use nickel::{HttpRouter, Nickel};
 use std::sync::{Arc, Mutex};
 use std::thread;
@@ -15,8 +16,8 @@ mod wunder;
 
 fn main() {
     //Wakeup
-    let hourlies: Arc<Mutex<Vec<climacell::HourlyWeather>>> = Arc::new(Mutex::new(vec![]));
-    let dailies: Arc<Mutex<Vec<climacell::DailyWeather>>> = Arc::new(Mutex::new(vec![]));
+    let hourlies: Arc<Mutex<Vec<HourlyWeather>>> = Arc::new(Mutex::new(vec![]));
+    let dailies: Arc<Mutex<Vec<DailyWeather>>> = Arc::new(Mutex::new(vec![]));
     let inst: Arc<Mutex<wunder::models::Root>> =
         Arc::new(Mutex::new(wunder::models::Root::default()));
 

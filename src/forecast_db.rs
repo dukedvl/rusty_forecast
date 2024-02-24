@@ -2,7 +2,7 @@ use std::str::FromStr;
 use chrono::{DateTime, Local, TimeZone, Utc};
 use postgres::{Client, NoTls};
 
-use crate::{climacell::{self, DailyWeather, HourlyWeather}, wunder::{self, models::InstModel}};
+use crate::{climacell::{self, models::{HourlyWeather, DailyWeather}}, wunder::{self, models::InstModel}};
 
 pub fn poke_db_timestamps() -> (DateTime<Utc>, DateTime<Utc>) {
     let mut client = Client::connect(&get_conn_str(), NoTls).unwrap();
@@ -52,7 +52,7 @@ pub fn get_daily_db() -> Vec<DailyWeather> {
     for row in dailies {
         let weather_convert: chrono::NaiveDateTime = row.get(2);
 
-        let daily = climacell::DailyWeather {
+        let daily = climacell::models::DailyWeather {
             id: row.get(0),
             created_at: row.get(1),
             weather_time: Local.from_local_datetime(&weather_convert).unwrap().into(),
@@ -91,7 +91,7 @@ pub fn get_hourly_db() -> Vec<HourlyWeather> {
     for row in hourlies.iter() {
         let weather_convert: chrono::NaiveDateTime = row.get(2);
 
-        let hourly = climacell::HourlyWeather {
+        let hourly = climacell::models::HourlyWeather {
             id: row.get(0),
             created_at: row.get(1),
             weather_time: Local.from_local_datetime(&weather_convert).unwrap().into(),

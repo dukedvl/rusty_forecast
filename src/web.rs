@@ -1,9 +1,7 @@
 use std::str::FromStr;
-
 use nickel::{hyper::header::AccessControlAllowOrigin, status::StatusCode, MediaType, QueryString};
-
-use crate::{climacell::{self, DailyWeather, HourlyWeather}, forecast_db::{self, HistoricalSearchType}, wunder};
-
+use crate::climacell::{models::{DailyWeather, HourlyWeather}, webmodels::{DailyRoot, HourlyRoot}};
+use crate::{forecast_db::{self, HistoricalSearchType}, wunder};
 
 pub fn get_hist(_request: &mut nickel::Request, _response: &mut nickel::Response) -> String {
     let search_type = _request.query().get("search_type").unwrap();
@@ -69,7 +67,7 @@ pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>) {
         .send()
         .unwrap();
     //Fix error handling, don't overwrite data
-    let root = resp.json::<climacell::HourlyRoot>().unwrap();
+    let root = resp.json::<HourlyRoot>().unwrap();
     let hourly = HourlyWeather::convert(root);
     *hourly_model = hourly;
 }
@@ -97,7 +95,7 @@ pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>) {
         .unwrap();
 
     //Fix error handling, don't overwrite data
-    let root = resp.json::<climacell::DailyRoot>().unwrap();
+    let root = resp.json::<DailyRoot>().unwrap();
     let daily = DailyWeather::convert(root);
     *daily_model = daily;
 }
@@ -145,7 +143,7 @@ pub fn get_cached_daily(_request: &mut nickel::Request, daily: &mut Vec<DailyWea
 
 pub fn get_cached_hourly(
     _request: &mut nickel::Request,
-    hourly: &mut Vec<climacell::HourlyWeather>,
+    hourly: &mut Vec<HourlyWeather>,
 ) -> String {
     println!("hitting hourly cache");
 
