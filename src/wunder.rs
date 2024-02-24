@@ -1,4 +1,5 @@
 use chrono::{DateTime, Local, Utc,NaiveDateTime};
+use postgres_types::FromSql;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
@@ -70,7 +71,7 @@ impl InstModel {
     pub fn convert(inst: &mut Root) -> InstModel {
         let obs: &Observation = &inst.observations[0];
         let imp = &obs.imperial;
-
+//,
         InstModel {
             obs_time_utc: DateTime::parse_from_rfc3339(&obs.obs_time_utc)
                 .unwrap()

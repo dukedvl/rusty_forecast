@@ -1,12 +1,17 @@
-use chrono::{DateTime, Local, TimeZone, Utc};
+use chrono::{DateTime, Local, NaiveDateTime, TimeZone, Utc};
 use climacell::{DailyWeather, HourlyWeather};
 use nickel::hyper::header::AccessControlAllowOrigin;
-use nickel::{HttpRouter, MediaType, Nickel, QueryString};
+use nickel::hyper::Error;
+use nickel::status::StatusCode;
+use nickel::{HttpRouter, MediaType, Nickel, Query, QueryString};
 use postgres::{Client, NoTls};
+use postgres_types::FromSql;
 use std::collections::HashMap;
+use std::str::FromStr;
 use std::sync::{Arc, Mutex};
 use std::thread;
 use std::time::Duration;
+use wunder::InstModel;
 
 extern crate chrono;
 #[macro_use]
@@ -164,8 +169,9 @@ fn main() {
 
     router.get(
         "/forecast/historical",
-        middleware! {|request|
-        get_hist(request)},
+        middleware! {|request,mut response|
+            get_hist(request, &mut response)
+        }
     );
 
     router.get("/forecast/echo", middleware! {|request| echo(request)});
@@ -321,8 +327,45 @@ pub fn get_inst_web(inst_model: &mut wunder::Root, api_key: String) {
     *inst_model = resp.json::<wunder::Root>().unwrap();
 }
 
-pub fn get_hist(_request: &mut nickel::Request) -> String {
-    "historical func".to_string()
+pub fn get_hist(_request: &mut nickel::Request, _response: &mut nickel::Response) -> String {
+   
+   let search_type = _request.query().get("search_type").unwrap();
+
+    match HistoricalSearchType::from_str(search_type).unwrap() {
+        HistoricalSearchType::Daily => {
+            let day = match _request.query().get("day") {
+                Some(d) => d,
+                None => {
+                    _response.set(StatusCode::BadRequest);
+                    return "missing day".to_string();
+                }
+            };
+            //Get historical data points, using single day
+            serde_json::to_string(&get_historical_db(day)).unwrap()
+        }
+
+        HistoricalSearchType::TimeRange => {
+            let query= _request.query(); 
+
+            let day1 = match query.get("day1") {
+                Some(d1) => d1,
+                None => {
+                    _response.set(StatusCode::BadRequest);
+                    return "missing day1".to_string();
+                }
+            };
+
+            let day2 = match query.get("day2") {
+                Some(d2) => d2,
+                None => {
+                    _response.set(StatusCode::BadRequest);
+                    return "missing day2".to_string();
+                }
+            };
+            //Do a time-range call
+            serde_json::to_string(&get_historical_range_db(day1, day2)).unwrap()
+        }
+    }
 }
 
 pub fn get_weekly_timestamp() -> String {
@@ -488,4 +531,99 @@ fn get_lat_long() -> String {
 
 fn get_station_id() -> String {
     std::env::var("RUSTYFORECAST_StationID").expect("Station ID not set")
+}
+
+fn get_historical_db(day: &str) -> Vec<InstModel> {
+    let mut returns = vec![];
+
+    let mut client = Client::connect(&get_conn_str(), NoTls).unwrap();
+
+    let queryStr= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) = '{day}'");
+    let rows = client
+        .query(
+            &queryStr,
+            &[],
+        )
+        .unwrap();
+
+    for row in rows.iter() {
+
+        let inst: InstModel = InstModel {
+            obs_time_utc: row.get(2),
+            obs_time_local:row.get(3),
+            temp: row.get(4),
+            heat_index: row.get(5),
+            wind_chill: row.get(6),
+            dewpt: row.get(7),
+            humidity: row.get(8),
+            precip_rate: row.get(9),
+            precip_total: row.get(10),
+            wind_speed: row.get(11),
+            winddir: row.get(12),
+            wind_gust: row.get(13),
+            pressure: row.get(14),
+            solar_radiation: row.get(15),
+            uv: row.get(16),
+        };
+
+        returns.push(inst);
+    }
+
+    returns
+}
+
+fn get_historical_range_db(day1: &str, day2: &str) -> Vec<InstModel> {
+    let mut returns = vec![];
+
+    let mut client = Client::connect(&get_conn_str(), NoTls).unwrap();
+
+    let queryStr= format!("SELECT * FROM historical_weather WHERE date(obs_time_local) BETWEEN '{day1}' AND '{day2}'");
+    let rows = client
+        .query(
+            &queryStr,
+            &[],
+        )
+        .unwrap();
+
+    for row in rows.iter() {
+
+        let inst: InstModel = InstModel {
+            obs_time_utc: row.get(2),
+            obs_time_local:row.get(3),
+            temp: row.get(4),
+            heat_index: row.get(5),
+            wind_chill: row.get(6),
+            dewpt: row.get(7),
+            humidity: row.get(8),
+            precip_rate: row.get(9),
+            precip_total: row.get(10),
+            wind_speed: row.get(11),
+            winddir: row.get(12),
+            wind_gust: row.get(13),
+            pressure: row.get(14),
+            solar_radiation: row.get(15),
+            uv: row.get(16),
+        };
+
+        returns.push(inst);
+    }
+
+    returns
+}
+
+enum HistoricalSearchType {
+    Daily,
+    TimeRange,
+}
+
+impl FromStr for HistoricalSearchType {
+    type Err = ();
+
+    fn from_str(input: &str) -> Result<HistoricalSearchType, Self::Err> {
+        match input {
+            "daily" => Ok(HistoricalSearchType::Daily),
+            "timerange" => Ok(HistoricalSearchType::TimeRange),
+            _ => Err(()),
+        }
+    }
 }
