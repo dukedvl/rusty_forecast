@@ -2,5 +2,11 @@
     "lldb.displayFormat": "auto",
     "lldb.showDisassembly": "never",
     "lldb.dereferencePointers": true,
-    "lldb.consoleMode": "commands"
+    "lldb.consoleMode": "commands",
+    "[rust]": {
+        "editor.formatOnPaste": true,
+        "editor.formatOnSave": false,
+        "editor.defaultFormatter": "jinxdash.prettier-rust",
+        
+    }
 }

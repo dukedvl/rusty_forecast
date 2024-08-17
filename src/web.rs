@@ -1,45 +1,56 @@
+use crate::climacell::{ models::{ DailyWeather, HourlyWeather }, webmodels::{ DailyRoot, HourlyRoot } };
+use crate::{ forecast_db::{ self, HistoricalSearchType }, wunder };
+use nickel::{ hyper::header::AccessControlAllowOrigin, status::StatusCode, MediaType, QueryString };
 use std::str::FromStr;
-use nickel::{hyper::header::AccessControlAllowOrigin, status::StatusCode, MediaType, QueryString};
-use crate::climacell::{models::{DailyWeather, HourlyWeather}, webmodels::{DailyRoot, HourlyRoot}};
-use crate::{forecast_db::{self, HistoricalSearchType}, wunder};
 
 pub fn get_hist(_request: &mut nickel::Request, _response: &mut nickel::Response) -> String {
-    let search_type = _request.query().get("search_type").unwrap();
+    match _request.query().get("search_type") {
+        Some(search_type) => {
+            match HistoricalSearchType::from_str(search_type) {
+                Ok(decoded_search_type) => {
+                    match decoded_search_type {
+                        HistoricalSearchType::Daily => {
+                            let day = match _request.query().get("day") {
+                                Some(d) => d,
+                                None => {
+                                    _response.set(StatusCode::BadRequest);
+                                    return "missing day".to_string();
+                                }
+                            };
+                            //Get historical data points, using single day
+                            serde_json::to_string(&forecast_db::get_historical_db(day)).unwrap()
+                        }
 
-    match HistoricalSearchType::from_str(search_type).unwrap() {
-        HistoricalSearchType::Daily => {
-            let day = match _request.query().get("day") {
-                Some(d) => d,
-                None => {
-                    _response.set(StatusCode::BadRequest);
-                    return "missing day".to_string();
+                        HistoricalSearchType::TimeRange => {
+                            let query = _request.query();
+
+                            let day1 = match query.get("day1") {
+                                Some(d1) => d1,
+                                None => {
+                                    _response.set(StatusCode::BadRequest);
+                                    return "missing day1".to_string();
+                                }
+                            };
+
+                            let day2 = match query.get("day2") {
+                                Some(d2) => d2,
+                                None => {
+                                    _response.set(StatusCode::BadRequest);
+                                    return "missing day2".to_string();
+                                }
+                            };
+                            //Do a time-range call
+                            serde_json::to_string(&forecast_db::get_historical_range_db(day1, day2)).unwrap()
+                        }
+                    }
                 }
-            };
-            //Get historical data points, using single day
-            serde_json::to_string(&forecast_db::get_historical_db(day)).unwrap()
+                Err(_) => {
+                    _response.set(StatusCode::BadRequest);
+                    format!("unknown search_type provided")
+                }
+            }
         }
-
-        HistoricalSearchType::TimeRange => {
-            let query = _request.query();
-
-            let day1 = match query.get("day1") {
-                Some(d1) => d1,
-                None => {
-                    _response.set(StatusCode::BadRequest);
-                    return "missing day1".to_string();
-                }
-            };
-
-            let day2 = match query.get("day2") {
-                Some(d2) => d2,
-                None => {
-                    _response.set(StatusCode::BadRequest);
-                    return "missing day2".to_string();
-                }
-            };
-            //Do a time-range call
-            serde_json::to_string(&forecast_db::get_historical_range_db(day1, day2)).unwrap()
-        }
+        None => "missing search_type".to_string(),
     }
 }
 
@@ -47,7 +58,7 @@ pub fn get_lat_long() -> String {
     std::env::var("RUSTYFORECAST_LATLONG").expect("Lat Long not set")
 }
 
-pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>) {
+pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>) -> Result<String, String> {
     println!("hitting hourly web API");
     let client = reqwest::blocking::Client::new();
     let lat_long = get_lat_long();
@@ -61,18 +72,24 @@ pub fn get_hourly_web(hourly_model: &mut Vec<HourlyWeather>) {
         ("apikey", &std::env::var("RUSTYFORECAST_climacellApi").unwrap()),
     ];
 
-    let resp = client
-        .get("https://api.tomorrow.io/v4/timelines")
-        .query(&params)
-        .send()
-        .unwrap();
-    //Fix error handling, don't overwrite data
-    let root = resp.json::<HourlyRoot>().unwrap();
-    let hourly = HourlyWeather::convert(root);
-    *hourly_model = hourly;
+    match client.get("https://api.tomorrow.io/v4/timelines").query(&params).send() {
+        Ok(resp) => {
+            //Fix error handling, don't overwrite data
+            match resp.json::<HourlyRoot>() {
+                Ok(root) => {
+                    let hourly = HourlyWeather::convert(root);
+                    *hourly_model = hourly;
+
+                    Ok("Successfully pulled hourly data from Web".to_string())
+                }
+                Err(e) => Err(format!("Couldn't deserialize hourly data from web, Reason: {e}")),
+            }
+        }
+        Err(e) => Err(format!("Couldn't retrieve hourly data from Web, Reason: {e}")),
+    }
 }
 
-pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>) {
+pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>) -> Result<String, String> {
     println!("hitting daily web API");
     let client = reqwest::blocking::Client::new();
     let lat_long = get_lat_long();
@@ -82,22 +99,24 @@ pub fn get_daily_web(daily_model: &mut Vec<DailyWeather>) {
         ("units", "imperial"),
         ("timesteps", "1d"),
         ("endTime", &forecast_db::get_weekly_timestamp()),
-        (
-            "fields",
-            "temperatureMin,temperatureMax,moonPhase,weatherCode,sunsetTime,sunriseTime",
-        ),
+        ("fields", "temperatureMin,temperatureMax,moonPhase,weatherCode,sunsetTime,sunriseTime"),
         ("apikey", &std::env::var("RUSTYFORECAST_climacellApi").unwrap()),
     ];
-    let resp = client
-        .get("https://api.tomorrow.io/v4/timelines")
-        .query(&params)
-        .send()
-        .unwrap();
 
-    //Fix error handling, don't overwrite data
-    let root = resp.json::<DailyRoot>().unwrap();
-    let daily = DailyWeather::convert(root);
-    *daily_model = daily;
+    match client.get("https://api.tomorrow.io/v4/timelines").query(&params).send() {
+        Ok(resp) => {
+            match resp.json::<DailyRoot>() {
+                Ok(root) => {
+                    let daily = DailyWeather::convert(root);
+                    *daily_model = daily;
+
+                    Ok("Successfully pulled daily data from Web".to_string())
+                }
+                Err(e) => Err(format!("Couldn't deserialize daily data from web, Reason: {e}")),
+            }
+        }
+        Err(e) => Err(format!("Couldn't retrieve daily data from Web, Reason: {e}")),
+    }
 }
 
 pub fn poke() -> String {
@@ -120,10 +139,11 @@ pub fn echo(request: &mut nickel::Request) -> String {
     const ERROR_STR: &str = "error";
 
     match request.query().all("echo") {
-        Some(value) => match value.first() {
-            Some(value) => value.to_owned(),
-            None => ERROR_STR.to_string(),
-        },
+        Some(value) =>
+            match value.first() {
+                Some(value) => value.to_owned(),
+                None => ERROR_STR.to_string(),
+            }
         None => ERROR_STR.to_string(),
     }
 }
@@ -141,17 +161,14 @@ pub fn get_cached_daily(_request: &mut nickel::Request, daily: &mut Vec<DailyWea
     serde_json::to_string(&daily).unwrap()
 }
 
-pub fn get_cached_hourly(
-    _request: &mut nickel::Request,
-    hourly: &mut Vec<HourlyWeather>,
-) -> String {
+pub fn get_cached_hourly(_request: &mut nickel::Request, hourly: &mut Vec<HourlyWeather>) -> String {
     println!("hitting hourly cache");
 
     serde_json::to_string(&hourly).unwrap()
 }
 
 pub fn get_cached_inst(_request: &mut nickel::Request, inst: &mut wunder::models::Root) -> String {
-    println!("hitting Inst API");
+    println!("hitting Inst cache");
 
     serde_json::to_string(&inst).unwrap()
 }
