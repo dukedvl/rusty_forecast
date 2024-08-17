@@ -18,7 +18,10 @@ pub fn get_hist(_request: &mut nickel::Request, _response: &mut nickel::Response
                                 }
                             };
                             //Get historical data points, using single day
-                            serde_json::to_string(&forecast_db::get_historical_db(day)).unwrap()
+                            match forecast_db::get_historical_db(day) {
+                                Ok(historical_data) => { serde_json::to_string(&historical_data).unwrap() }
+                                Err(e) => { serde_json::to_string(&e).unwrap() }
+                            }
                         }
 
                         HistoricalSearchType::TimeRange => {
@@ -40,7 +43,10 @@ pub fn get_hist(_request: &mut nickel::Request, _response: &mut nickel::Response
                                 }
                             };
                             //Do a time-range call
-                            serde_json::to_string(&forecast_db::get_historical_range_db(day1, day2)).unwrap()
+                            match forecast_db::get_historical_range_db(day1, day2) {
+                                Ok(historical_data) => { serde_json::to_string(&historical_data).unwrap() }
+                                Err(e) => { serde_json::to_string(&e).unwrap() }
+                            }
                         }
                     }
                 }
