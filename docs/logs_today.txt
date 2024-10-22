@@ -1,3 +1,390 @@
+2024-10-21T21:53:02.647226335Z Daily data still fresh
+2024-10-21T22:08:02.647940551Z Instant data still fresh
+2024-10-21T22:08:02.648048363Z Hourly data still fresh
+2024-10-21T22:08:02.648084808Z Daily data still fresh
+2024-10-21T22:23:02.648396755Z Pulling Instant Web
+2024-10-21T22:23:03.015378980Z Pulled Inst data from Web
+2024-10-21T22:23:03.025773509Z Successfully dumped interval for 2024-10-21 22:22:46 UTC to DB, 1 rows affected
+2024-10-21T22:23:03.026001809Z Successfully persisted Inst data to DB
+2024-10-21T22:23:03.026024694Z Hourly data still fresh
+2024-10-21T22:23:03.026042180Z Daily data still fresh
+2024-10-21T22:38:03.026769338Z Instant data still fresh
+2024-10-21T22:38:03.026874703Z Hourly data still fresh
+2024-10-21T22:38:03.026911487Z Daily data still fresh
+2024-10-21T22:53:03.027213374Z Pulling Instant Web
+2024-10-21T22:53:03.312892174Z Pulled Inst data from Web
+2024-10-21T22:53:03.323319644Z Successfully dumped interval for 2024-10-21 22:52:54 UTC to DB, 1 rows affected
+2024-10-21T22:53:03.323574137Z Successfully persisted Inst data to DB
+2024-10-21T22:53:03.323597954Z Hourly data still fresh
+2024-10-21T22:53:03.323615419Z Daily data still fresh
+2024-10-21T23:08:03.324408596Z Instant data still fresh
+2024-10-21T23:08:03.324516022Z Hourly data still fresh
+2024-10-21T23:08:03.324581215Z Daily data still fresh
+2024-10-21T23:23:03.324826782Z Pulling Instant Web
+2024-10-21T23:23:03.688306994Z Pulled Inst data from Web
+2024-10-21T23:23:03.698308978Z Successfully dumped interval for 2024-10-21 23:22:46 UTC to DB, 1 rows affected
+2024-10-21T23:23:03.698535175Z Successfully persisted Inst data to DB
+2024-10-21T23:23:03.698560539Z Hourly data still fresh
+2024-10-21T23:23:03.698577740Z Daily data still fresh
+2024-10-21T23:38:03.699368533Z Instant data still fresh
+2024-10-21T23:38:03.699476891Z Hourly data still fresh
+2024-10-21T23:38:03.699513050Z Daily data still fresh
+2024-10-21T23:53:03.699737451Z Pulling Instant Web
+2024-10-21T23:53:04.057902794Z Pulled Inst data from Web
+2024-10-21T23:53:04.068357694Z Successfully dumped interval for 2024-10-21 23:52:54 UTC to DB, 1 rows affected
+2024-10-21T23:53:04.068633151Z Successfully persisted Inst data to DB
+2024-10-21T23:53:04.068659769Z Hourly data still fresh
+2024-10-21T23:53:04.068701201Z Daily data still fresh
+2024-10-22T00:08:04.069430190Z Instant data still fresh
+2024-10-22T00:08:04.069539258Z Hourly data still fresh
+2024-10-22T00:08:04.069576243Z Daily data still fresh
+2024-10-22T00:23:04.069840637Z Pulling Instant Web
+2024-10-22T00:23:04.582322105Z Pulled Inst data from Web
+2024-10-22T00:23:04.592535456Z Successfully dumped interval for 2024-10-22 00:22:46 UTC to DB, 1 rows affected
+2024-10-22T00:23:04.592768219Z Successfully persisted Inst data to DB
+2024-10-22T00:23:04.592795225Z Hourly data still fresh
+2024-10-22T00:23:04.592813864Z Daily data still fresh
+2024-10-22T00:38:04.593585292Z Instant data still fresh
+2024-10-22T00:38:04.593695562Z Hourly data still fresh
+2024-10-22T00:38:04.593733029Z Daily data still fresh
+2024-10-22T00:53:04.594860364Z Pulling Instant Web
+2024-10-22T00:53:04.960045135Z Pulled Inst data from Web
+2024-10-22T00:53:04.970206694Z Successfully dumped interval for 2024-10-22 00:52:54 UTC to DB, 1 rows affected
+2024-10-22T00:53:04.970389084Z Successfully persisted Inst data to DB
+2024-10-22T00:53:04.970415483Z Hourly data still fresh
+2024-10-22T00:53:04.970433192Z Daily data still fresh
+2024-10-22T01:08:04.971185006Z Instant data still fresh
+2024-10-22T01:08:04.971294251Z Hourly data still fresh
+2024-10-22T01:08:04.971331225Z Daily data still fresh
+2024-10-22T01:23:04.971635746Z Pulling Instant Web
+2024-10-22T01:23:05.526302388Z Pulled Inst data from Web
+2024-10-22T01:23:05.536359791Z Successfully dumped interval for 2024-10-22 01:22:46 UTC to DB, 1 rows affected
+2024-10-22T01:23:05.536614839Z Successfully persisted Inst data to DB
+2024-10-22T01:23:05.536638230Z Hourly data still fresh
+2024-10-22T01:23:05.536655054Z Daily data still fresh
+2024-10-22T01:38:05.537388464Z Instant data still fresh
+2024-10-22T01:38:05.537501767Z Hourly data still fresh
+2024-10-22T01:38:05.537554352Z Daily data still fresh
+2024-10-22T01:53:05.537774245Z Pulling Instant Web
+2024-10-22T01:53:05.852190879Z Pulled Inst data from Web
+2024-10-22T01:53:05.862658554Z Successfully dumped interval for 2024-10-22 01:52:54 UTC to DB, 1 rows affected
+2024-10-22T01:53:05.862895984Z Successfully persisted Inst data to DB
+2024-10-22T01:53:05.862943779Z Hourly data still fresh
+2024-10-22T01:53:05.862985652Z Daily data still fresh
+2024-10-22T02:08:05.863742811Z Instant data still fresh
+2024-10-22T02:08:05.863851400Z Hourly data still fresh
+2024-10-22T02:08:05.863888114Z Daily data still fresh
+2024-10-22T02:23:05.864184700Z Pulling Instant Web
+2024-10-22T02:23:06.177129426Z Pulled Inst data from Web
+2024-10-22T02:23:06.187419444Z Successfully dumped interval for 2024-10-22 02:23:02 UTC to DB, 1 rows affected
+2024-10-22T02:23:06.187669276Z Successfully persisted Inst data to DB
+2024-10-22T02:23:06.187693509Z Hourly data still fresh
+2024-10-22T02:23:06.187712625Z Daily data still fresh
+2024-10-22T02:38:06.188430064Z Instant data still fresh
+2024-10-22T02:38:06.188572263Z Hourly data still fresh
+2024-10-22T02:38:06.188615185Z Daily data still fresh
+2024-10-22T02:53:06.188910552Z Pulling Instant Web
+2024-10-22T02:53:06.503057605Z Pulled Inst data from Web
+2024-10-22T02:53:06.513191769Z Successfully dumped interval for 2024-10-22 02:52:54 UTC to DB, 1 rows affected
+2024-10-22T02:53:06.513537011Z Successfully persisted Inst data to DB
+2024-10-22T02:53:06.513560362Z Hourly data still fresh
+2024-10-22T02:53:06.513578853Z Daily data still fresh
+2024-10-22T03:08:06.514332479Z Instant data still fresh
+2024-10-22T03:08:06.514441746Z Hourly data still fresh
+2024-10-22T03:08:06.514478571Z Daily data still fresh
+2024-10-22T03:23:06.514741519Z Pulling Instant Web
+2024-10-22T03:23:06.878184032Z Pulled Inst data from Web
+2024-10-22T03:23:06.888449537Z Successfully dumped interval for 2024-10-22 03:23:02 UTC to DB, 1 rows affected
+2024-10-22T03:23:06.888705086Z Successfully persisted Inst data to DB
+2024-10-22T03:23:06.888730600Z Hourly data still fresh
+2024-10-22T03:23:06.888748751Z Daily data still fresh
+2024-10-22T03:38:06.889365910Z Instant data still fresh
+2024-10-22T03:38:06.889475023Z Hourly data still fresh
+2024-10-22T03:38:06.889512169Z Daily data still fresh
+2024-10-22T03:53:06.889738176Z Pulling Instant Web
+2024-10-22T03:53:07.482942051Z Pulled Inst data from Web
+2024-10-22T03:53:07.493215104Z Successfully dumped interval for 2024-10-22 03:52:54 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.493582645Z Successfully persisted Inst data to DB
+2024-10-22T03:53:07.493606019Z Hourly data expired (8h), pulling from web
+2024-10-22T03:53:07.493623827Z hitting hourly web API
+2024-10-22T03:53:07.866076841Z Pulled hourly data from Web
+2024-10-22T03:53:07.866138870Z Persisting new hourly data to DB
+2024-10-22T03:53:07.875837484Z Successfully dumped interval for 2024-10-22 03:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.876642424Z Successfully dumped interval for 2024-10-22 04:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.877631892Z Successfully dumped interval for 2024-10-22 05:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.878436083Z Successfully dumped interval for 2024-10-22 06:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.879246952Z Successfully dumped interval for 2024-10-22 07:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.880007503Z Successfully dumped interval for 2024-10-22 08:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.880815678Z Successfully dumped interval for 2024-10-22 09:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.881567409Z Successfully dumped interval for 2024-10-22 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.882372066Z Successfully dumped interval for 2024-10-22 11:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.883075133Z Successfully dumped interval for 2024-10-22 12:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.883784797Z Successfully dumped interval for 2024-10-22 13:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.884511612Z Successfully dumped interval for 2024-10-22 14:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.885264357Z Successfully dumped interval for 2024-10-22 15:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.885988818Z Successfully dumped interval for 2024-10-22 16:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.886838477Z Successfully dumped interval for 2024-10-22 17:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.887607654Z Successfully dumped interval for 2024-10-22 18:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.888353142Z Successfully dumped interval for 2024-10-22 19:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.889063218Z Successfully dumped interval for 2024-10-22 20:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.889775751Z Successfully dumped interval for 2024-10-22 21:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.890523975Z Successfully dumped interval for 2024-10-22 22:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.891280340Z Successfully dumped interval for 2024-10-22 23:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.891963011Z Successfully dumped interval for 2024-10-23 00:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.892644763Z Successfully dumped interval for 2024-10-23 01:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.893462409Z Successfully dumped interval for 2024-10-23 02:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.894186271Z Successfully dumped interval for 2024-10-23 03:00:00 UTC to DB, 1 rows affected
+2024-10-22T03:53:07.894400387Z Successfully saved hourly data to DB
+2024-10-22T03:53:07.894416442Z Daily data still fresh
+2024-10-22T04:08:07.895241646Z Instant data still fresh
+2024-10-22T04:08:07.895349289Z Hourly data still fresh
+2024-10-22T04:08:07.895386257Z Daily data still fresh
+2024-10-22T04:23:07.895641305Z Pulling Instant Web
+2024-10-22T04:23:08.225288560Z Pulled Inst data from Web
+2024-10-22T04:23:08.235305095Z Successfully dumped interval for 2024-10-22 04:23:02 UTC to DB, 1 rows affected
+2024-10-22T04:23:08.235597721Z Successfully persisted Inst data to DB
+2024-10-22T04:23:08.235640648Z Hourly data still fresh
+2024-10-22T04:23:08.235658423Z Daily data still fresh
+2024-10-22T04:38:08.236378016Z Instant data still fresh
+2024-10-22T04:38:08.236486242Z Hourly data still fresh
+2024-10-22T04:38:08.236522621Z Daily data still fresh
+2024-10-22T04:53:08.236807378Z Pulling Instant Web
+2024-10-22T04:53:08.565122274Z Pulled Inst data from Web
+2024-10-22T04:53:08.575632786Z Successfully dumped interval for 2024-10-22 04:52:54 UTC to DB, 1 rows affected
+2024-10-22T04:53:08.575872246Z Successfully persisted Inst data to DB
+2024-10-22T04:53:08.575894116Z Hourly data still fresh
+2024-10-22T04:53:08.575911849Z Daily data still fresh
+2024-10-22T05:08:08.576717987Z Instant data still fresh
+2024-10-22T05:08:08.576827436Z Hourly data still fresh
+2024-10-22T05:08:08.576864592Z Daily data still fresh
+2024-10-22T05:23:08.577121458Z Pulling Instant Web
+2024-10-22T05:23:08.868885023Z Pulled Inst data from Web
+2024-10-22T05:23:08.879049088Z Successfully dumped interval for 2024-10-22 05:23:02 UTC to DB, 1 rows affected
+2024-10-22T05:23:08.879251049Z Successfully persisted Inst data to DB
+2024-10-22T05:23:08.879275078Z Hourly data still fresh
+2024-10-22T05:23:08.879292435Z Daily data still fresh
+2024-10-22T05:38:08.880020963Z Instant data still fresh
+2024-10-22T05:38:08.880129779Z Hourly data still fresh
+2024-10-22T05:38:08.880166339Z Daily data still fresh
+2024-10-22T05:53:08.880459362Z Pulling Instant Web
+2024-10-22T05:53:09.199562639Z Pulled Inst data from Web
+2024-10-22T05:53:09.209998621Z Successfully dumped interval for 2024-10-22 05:52:54 UTC to DB, 1 rows affected
+2024-10-22T05:53:09.210268187Z Successfully persisted Inst data to DB
+2024-10-22T05:53:09.210291593Z Hourly data still fresh
+2024-10-22T05:53:09.210310070Z Daily data still fresh
+2024-10-22T06:08:09.211099354Z Instant data still fresh
+2024-10-22T06:08:09.211206647Z Hourly data still fresh
+2024-10-22T06:08:09.211243389Z Daily data still fresh
+2024-10-22T06:23:09.211472710Z Pulling Instant Web
+2024-10-22T06:23:09.530636664Z Pulled Inst data from Web
+2024-10-22T06:23:09.540527481Z Successfully dumped interval for 2024-10-22 06:23:02 UTC to DB, 1 rows affected
+2024-10-22T06:23:09.540821752Z Successfully persisted Inst data to DB
+2024-10-22T06:23:09.540846680Z Hourly data still fresh
+2024-10-22T06:23:09.540864575Z Daily data still fresh
+2024-10-22T06:38:09.541613130Z Instant data still fresh
+2024-10-22T06:38:09.541722347Z Hourly data still fresh
+2024-10-22T06:38:09.541759839Z Daily data still fresh
+2024-10-22T06:53:09.541999081Z Pulling Instant Web
+2024-10-22T06:53:09.814464734Z Pulled Inst data from Web
+2024-10-22T06:53:09.824693248Z Successfully dumped interval for 2024-10-22 06:52:53 UTC to DB, 1 rows affected
+2024-10-22T06:53:09.824993397Z Successfully persisted Inst data to DB
+2024-10-22T06:53:09.825016316Z Hourly data still fresh
+2024-10-22T06:53:09.825033811Z Daily data still fresh
+2024-10-22T07:08:09.825738803Z Instant data still fresh
+2024-10-22T07:08:09.825845683Z Hourly data still fresh
+2024-10-22T07:08:09.825882706Z Daily data still fresh
+2024-10-22T07:23:09.826175430Z Pulling Instant Web
+2024-10-22T07:23:10.099452223Z Pulled Inst data from Web
+2024-10-22T07:23:10.109686159Z Successfully dumped interval for 2024-10-22 07:23:01 UTC to DB, 1 rows affected
+2024-10-22T07:23:10.112279161Z Successfully persisted Inst data to DB
+2024-10-22T07:23:10.112311620Z Hourly data still fresh
+2024-10-22T07:23:10.112330773Z Daily data still fresh
+2024-10-22T07:38:10.110733555Z Instant data still fresh
+2024-10-22T07:38:10.110841405Z Hourly data still fresh
+2024-10-22T07:38:10.110877905Z Daily data still fresh
+2024-10-22T07:53:10.110885152Z Pulling Instant Web
+2024-10-22T07:53:10.384851134Z Pulled Inst data from Web
+2024-10-22T07:53:10.395030405Z Successfully dumped interval for 2024-10-22 07:52:53 UTC to DB, 1 rows affected
+2024-10-22T07:53:10.395300791Z Successfully persisted Inst data to DB
+2024-10-22T07:53:10.395324329Z Hourly data still fresh
+2024-10-22T07:53:10.395341719Z Daily data still fresh
+2024-10-22T08:08:10.396054464Z Instant data still fresh
+2024-10-22T08:08:10.396163231Z Hourly data still fresh
+2024-10-22T08:08:10.396200165Z Daily data still fresh
+2024-10-22T08:23:10.396392531Z Pulling Instant Web
+2024-10-22T08:23:10.688211496Z Failed to pull Inst data from wunderground
+2024-10-22T08:23:10.688283042Z Hourly data still fresh
+2024-10-22T08:23:10.688317654Z Daily data still fresh
+2024-10-22T08:38:10.688752525Z Pulling Instant Web
+2024-10-22T08:38:10.968583791Z Failed to pull Inst data from wunderground
+2024-10-22T08:38:10.968656189Z Hourly data still fresh
+2024-10-22T08:38:10.968676750Z Daily data still fresh
+2024-10-22T08:53:10.969210681Z Pulling Instant Web
+2024-10-22T08:53:11.258509447Z Failed to pull Inst data from wunderground
+2024-10-22T08:53:11.258557717Z Hourly data still fresh
+2024-10-22T08:53:11.258569620Z Daily data still fresh
+2024-10-22T09:08:11.259088903Z Pulling Instant Web
+2024-10-22T09:08:11.536659978Z Failed to pull Inst data from wunderground
+2024-10-22T09:08:11.536760169Z Hourly data still fresh
+2024-10-22T09:08:11.536783052Z Daily data still fresh
+2024-10-22T09:23:11.537238323Z Pulling Instant Web
+2024-10-22T09:23:11.834996562Z Failed to pull Inst data from wunderground
+2024-10-22T09:23:11.835062960Z Hourly data still fresh
+2024-10-22T09:23:11.835087147Z Daily data still fresh
+2024-10-22T09:38:11.835544158Z Pulling Instant Web
+2024-10-22T09:38:12.116589546Z Failed to pull Inst data from wunderground
+2024-10-22T09:38:12.116649673Z Hourly data still fresh
+2024-10-22T09:38:12.116671159Z Daily data still fresh
+2024-10-22T09:53:12.117199389Z Pulling Instant Web
+2024-10-22T09:53:12.441128366Z Failed to pull Inst data from wunderground
+2024-10-22T09:53:12.441193852Z Hourly data still fresh
+2024-10-22T09:53:12.441216407Z Daily data still fresh
+2024-10-22T10:08:12.441723223Z Pulling Instant Web
+2024-10-22T10:08:12.727765103Z Failed to pull Inst data from wunderground
+2024-10-22T10:08:12.727826141Z Hourly data still fresh
+2024-10-22T10:08:12.727848419Z Daily data still fresh
+2024-10-22T10:23:12.728346725Z Pulling Instant Web
+2024-10-22T10:23:13.002180168Z Failed to pull Inst data from wunderground
+2024-10-22T10:23:13.002243426Z Hourly data still fresh
+2024-10-22T10:23:13.002267398Z Daily data still fresh
+2024-10-22T10:38:13.002717742Z Pulling Instant Web
+2024-10-22T10:38:13.312017773Z Failed to pull Inst data from wunderground
+2024-10-22T10:38:13.312084067Z Hourly data still fresh
+2024-10-22T10:38:13.312108789Z Daily data still fresh
+2024-10-22T10:53:13.312603988Z Pulling Instant Web
+2024-10-22T10:53:13.887473276Z Failed to pull Inst data from wunderground
+2024-10-22T10:53:13.887539325Z Hourly data still fresh
+2024-10-22T10:53:13.887563314Z Daily data still fresh
+2024-10-22T11:08:13.888126989Z Pulling Instant Web
+2024-10-22T11:08:14.174737370Z Failed to pull Inst data from wunderground
+2024-10-22T11:08:14.174799782Z Hourly data still fresh
+2024-10-22T11:08:14.174822187Z Daily data still fresh
+2024-10-22T11:23:14.175266690Z Pulling Instant Web
+2024-10-22T11:23:14.607740477Z Failed to pull Inst data from wunderground
+2024-10-22T11:23:14.607805099Z Hourly data still fresh
+2024-10-22T11:23:14.607829305Z Daily data still fresh
+2024-10-22T11:38:14.608378959Z Pulling Instant Web
+2024-10-22T11:38:14.931091087Z Failed to pull Inst data from wunderground
+2024-10-22T11:38:14.931151282Z Hourly data still fresh
+2024-10-22T11:38:14.931171687Z Daily data still fresh
+2024-10-22T11:53:14.931669734Z Pulling Instant Web
+2024-10-22T11:53:15.209927523Z Failed to pull Inst data from wunderground
+2024-10-22T11:53:15.209985961Z Hourly data expired (8h), pulling from web
+2024-10-22T11:53:15.210007035Z hitting hourly web API
+2024-10-22T11:53:15.643443780Z Pulled hourly data from Web
+2024-10-22T11:53:15.643505536Z Persisting new hourly data to DB
+2024-10-22T11:53:15.654071784Z Successfully dumped interval for 2024-10-22 11:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.655062979Z Successfully dumped interval for 2024-10-22 12:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.656135562Z Successfully dumped interval for 2024-10-22 13:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.656970422Z Successfully dumped interval for 2024-10-22 14:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.657750215Z Successfully dumped interval for 2024-10-22 15:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.658533125Z Successfully dumped interval for 2024-10-22 16:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.659312201Z Successfully dumped interval for 2024-10-22 17:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.660060440Z Successfully dumped interval for 2024-10-22 18:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.660846800Z Successfully dumped interval for 2024-10-22 19:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.661628584Z Successfully dumped interval for 2024-10-22 20:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.662441127Z Successfully dumped interval for 2024-10-22 21:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.663216908Z Successfully dumped interval for 2024-10-22 22:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.663939379Z Successfully dumped interval for 2024-10-22 23:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.664853624Z Successfully dumped interval for 2024-10-23 00:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.665629343Z Successfully dumped interval for 2024-10-23 01:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.666340765Z Successfully dumped interval for 2024-10-23 02:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.667052698Z Successfully dumped interval for 2024-10-23 03:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.667884445Z Successfully dumped interval for 2024-10-23 04:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.668654216Z Successfully dumped interval for 2024-10-23 05:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.669385772Z Successfully dumped interval for 2024-10-23 06:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.670185284Z Successfully dumped interval for 2024-10-23 07:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.670972135Z Successfully dumped interval for 2024-10-23 08:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.671776082Z Successfully dumped interval for 2024-10-23 09:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.672482827Z Successfully dumped interval for 2024-10-23 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.673210931Z Successfully dumped interval for 2024-10-23 11:00:00 UTC to DB, 1 rows affected
+2024-10-22T11:53:15.673427792Z Successfully saved hourly data to DB
+2024-10-22T11:53:15.673444297Z Daily data still fresh
+2024-10-22T12:08:15.674242734Z Pulling Instant Web
+2024-10-22T12:08:16.011314578Z Failed to pull Inst data from wunderground
+2024-10-22T12:08:16.011374243Z Hourly data still fresh
+2024-10-22T12:08:16.011394578Z Daily data still fresh
+2024-10-22T12:23:16.011899889Z Pulling Instant Web
+2024-10-22T12:23:16.291673264Z Pulled Inst data from Web
+2024-10-22T12:23:16.302065275Z Successfully dumped interval for 2024-10-22 12:23:01 UTC to DB, 1 rows affected
+2024-10-22T12:23:16.302407211Z Successfully persisted Inst data to DB
+2024-10-22T12:23:16.302430381Z Hourly data still fresh
+2024-10-22T12:23:16.302449085Z Daily data still fresh
+2024-10-22T12:38:16.303164417Z Instant data still fresh
+2024-10-22T12:38:16.303275488Z Hourly data still fresh
+2024-10-22T12:38:16.303312016Z Daily data still fresh
+2024-10-22T12:53:16.303563156Z Pulling Instant Web
+2024-10-22T12:53:16.592600281Z Pulled Inst data from Web
+2024-10-22T12:53:16.602889527Z Successfully dumped interval for 2024-10-22 12:53:09 UTC to DB, 1 rows affected
+2024-10-22T12:53:16.603118161Z Successfully persisted Inst data to DB
+2024-10-22T12:53:16.603138924Z Hourly data still fresh
+2024-10-22T12:53:16.603156309Z Daily data still fresh
+2024-10-22T13:08:16.603885073Z Instant data still fresh
+2024-10-22T13:08:16.603998811Z Hourly data still fresh
+2024-10-22T13:08:16.604036039Z Daily data still fresh
+2024-10-22T13:23:16.604291696Z Pulling Instant Web
+2024-10-22T13:23:17.146716545Z Pulled Inst data from Web
+2024-10-22T13:23:17.154382700Z Successfully dumped interval for 2024-10-22 13:23:01 UTC to DB, 1 rows affected
+2024-10-22T13:23:17.154658161Z Successfully persisted Inst data to DB
+2024-10-22T13:23:17.154675307Z Hourly data still fresh
+2024-10-22T13:23:17.154687830Z Daily data still fresh
+2024-10-22T13:38:17.155428521Z Instant data still fresh
+2024-10-22T13:38:17.155541760Z Hourly data still fresh
+2024-10-22T13:38:17.155579173Z Daily data still fresh
+2024-10-22T13:53:17.155877601Z Pulling Instant Web
+2024-10-22T13:53:17.604645173Z Pulled Inst data from Web
+2024-10-22T13:53:17.612372497Z Successfully dumped interval for 2024-10-22 13:53:09 UTC to DB, 1 rows affected
+2024-10-22T13:53:17.612655970Z Successfully persisted Inst data to DB
+2024-10-22T13:53:17.612692000Z Hourly data still fresh
+2024-10-22T13:53:17.612704988Z Daily data still fresh
+2024-10-22T14:08:17.613448705Z Instant data still fresh
+2024-10-22T14:08:17.613558144Z Hourly data still fresh
+2024-10-22T14:08:17.613594606Z Daily data still fresh
+2024-10-22T14:23:17.613860648Z Pulling Instant Web
+2024-10-22T14:23:17.950107549Z Pulled Inst data from Web
+2024-10-22T14:23:17.960891358Z Successfully dumped interval for 2024-10-22 14:23:01 UTC to DB, 1 rows affected
+2024-10-22T14:23:17.961168700Z Successfully persisted Inst data to DB
+2024-10-22T14:23:17.961192323Z Hourly data still fresh
+2024-10-22T14:23:17.961210499Z Daily data still fresh
+2024-10-22T14:38:17.961967005Z Instant data still fresh
+2024-10-22T14:38:17.962419298Z Hourly data still fresh
+2024-10-22T14:38:17.963074677Z Daily data still fresh
+2024-10-22T14:53:17.962349934Z Pulling Instant Web
+2024-10-22T14:53:18.283668943Z Pulled Inst data from Web
+2024-10-22T14:53:18.294170045Z Successfully dumped interval for 2024-10-22 14:53:09 UTC to DB, 1 rows affected
+2024-10-22T14:53:18.294466349Z Successfully persisted Inst data to DB
+2024-10-22T14:53:18.294490691Z Hourly data still fresh
+2024-10-22T14:53:18.294509964Z Daily data still fresh
+2024-10-22T15:08:18.295122652Z Instant data still fresh
+2024-10-22T15:08:18.295214670Z Hourly data still fresh
+2024-10-22T15:08:18.295226847Z Daily data still fresh
+2024-10-22T15:23:18.295642072Z Pulling Instant Web
+2024-10-22T15:23:18.590504974Z Pulled Inst data from Web
+2024-10-22T15:23:18.600644495Z Successfully dumped interval for 2024-10-22 15:23:01 UTC to DB, 1 rows affected
+2024-10-22T15:23:18.600914292Z Successfully persisted Inst data to DB
+2024-10-22T15:23:18.600937476Z Hourly data still fresh
+2024-10-22T15:23:18.600954620Z Daily data still fresh
+2024-10-22T15:38:18.601696323Z Instant data still fresh
+2024-10-22T15:38:18.601806798Z Hourly data still fresh
+2024-10-22T15:38:18.601842914Z Daily data still fresh
+2024-10-22T15:53:18.602067499Z Pulling Instant Web
+2024-10-22T15:53:18.885503722Z Pulled Inst data from Web
+2024-10-22T15:53:18.899240043Z Successfully dumped interval for 2024-10-22 15:53:09 UTC to DB, 1 rows affected
+2024-10-22T15:53:18.899445428Z Successfully persisted Inst data to DB
+2024-10-22T15:53:18.899528882Z Hourly data still fresh
+2024-10-22T15:53:18.899553316Z Daily data still fresh
+2024-10-22T16:08:18.900444385Z Instant data still fresh
+2024-10-22T16:08:18.900578355Z Hourly data still fresh
+2024-10-22T16:08:18.900615446Z Daily data still fresh
+2024-10-22T16:23:18.900827591Z Pulling Instant Web
+2024-10-22T16:23:19.216078152Z Pulled Inst data from Web
+2024-10-22T16:23:19.226267081Z Successfully dumped interval for 2024-10-22 16:23:01 UTC to DB, 1 rows affected
+2024-10-22T16:23:19.226589859Z Successfully persisted Inst data to DB
+2024-10-22T16:23:19.226612584Z Hourly data still fresh
+2024-10-22T16:23:19.226637140Z Daily data still fresh
+2024-10-22T16:31:59.083379336Z hitting daily cache
+2024-10-22T16:31:59.250588181Z Healthcheck(Ok)
+2024-10-22T16:31:59.424073779Z hitting hourly cache
 2024-10-22T16:31:59.519403132Z Healthcheck(Ok)
 2024-10-22T16:31:59.721697546Z hitting Inst cache
 2024-10-22T16:33:44.780472859Z hitting daily cache
@@ -98,3 +485,16 @@
 2024-10-22T19:53:22.132947446Z Successfully saved hourly data to DB
 2024-10-22T19:53:22.132963394Z Daily data still fresh
 2024-10-22T20:06:19.843949352Z hitting daily cache
+2024-10-22T20:08:22.133726264Z Instant data still fresh
+2024-10-22T20:08:22.133863910Z Hourly data still fresh
+2024-10-22T20:08:22.133882710Z Daily data expired(24h), pulling from web
+2024-10-22T20:08:22.133900224Z hitting daily web API
+2024-10-22T20:08:38.789571539Z Pulled daily data from Web
+2024-10-22T20:08:38.789669781Z Persisting daily data to DB
+2024-10-22T20:08:38.799572970Z Successfully dumped interval for 2024-10-22 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.800527684Z Successfully dumped interval for 2024-10-23 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.801480464Z Successfully dumped interval for 2024-10-24 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.802450924Z Successfully dumped interval for 2024-10-25 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.803481429Z Successfully dumped interval for 2024-10-26 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.804291099Z Successfully dumped interval for 2024-10-27 10:00:00 UTC to DB, 1 rows affected
+2024-10-22T20:08:38.804516416Z Successfully saved daily data to DB
